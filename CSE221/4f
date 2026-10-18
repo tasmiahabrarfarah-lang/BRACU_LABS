@@ -1,0 +1,32 @@
+n=int(input())
+s=list(map(int,input().split()))
+c=0
+r=[]
+if 0<s[0]+1<n+1 and 0<s[1]+1<n+1:
+  c+=1
+  r.append((s[0]+1,s[1]+1))
+if 0<s[0]+1<n+1 and 0<s[1]<n+1:
+  c+=1
+  r.append((s[0]+1,s[1]))
+if 0<s[0]<n+1 and 0<s[1]+1<n+1:
+  c+=1
+  r.append((s[0],s[1]+1))
+if 0<s[0]-1<n+1 and 0<s[1]-1<n+1:
+  c+=1
+  r.append((s[0]-1,s[1]-1))
+if 0<s[0]<n+1 and 0<s[1]-1<n+1:
+  c+=1
+  r.append((s[0],s[1]-1))
+if 0<s[0]-1<n+1 and 0<s[1]<n+1:
+  c+=1
+  r.append((s[0]-1,s[1]))
+if 0<s[0]+1<n+1 and 0<s[1]-1<n+1:
+  c+=1
+  r.append((s[0]+1,s[1]-1))
+if 0<s[0]-1<n+1 and 0<s[1]+1<n+1:
+  c+=1
+  r.append((s[0]-1,s[1]+1))
+print(c)
+r.sort(key=lambda x:(x[0],x[1]))
+for i in range(c):
+  print(r[i][0],r[i][1])

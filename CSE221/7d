@@ -1,0 +1,37 @@
+import heapq
+
+def node_weighted_dijkstra(n, adj, weights, source, dest):
+    cost = [float('inf')] * (n + 1)
+    cost[source] = weights[source]
+    heap = [(cost[source], source)]
+
+    while heap:
+        c, u = heapq.heappop(heap)
+
+        if c > cost[u]:
+            continue
+
+        for v in adj[u]:
+            new_cost = cost[u] + weights[v]
+            if new_cost < cost[v]:
+                cost[v] = new_cost
+                heapq.heappush(heap, (cost[v], v))
+
+    return cost
+
+def main():
+    n, m, s, d = map(int, input().split())
+    weights = [0] + list(map(int, input().split()))  
+    adj = [[] for _ in range(n + 1)] 
+    for _ in range(m):
+        u, v = map(int, input().split())
+        adj[u].append(v)  
+    cost = node_weighted_dijkstra(n, adj, weights, s, d)
+
+    if cost[d] == float('inf'):
+        print(-1)
+    else:
+        print(cost[d])
+
+if __name__ == "__main__":
+    main()

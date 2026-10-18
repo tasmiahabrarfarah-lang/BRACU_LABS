@@ -1,0 +1,64 @@
+class Queue:
+    def __init__(self):
+        self.queue = []
+    
+    def enqueue(self, element):
+        self.queue.append(element)
+    
+    def dequeue(self):
+        if self.isEmpty():
+            return "Queue is empty"
+        x=self.queue[0]
+        self.queue.remove(x)
+        return x
+    
+    def peek(self):
+        if self.isEmpty():
+            return "Queue is empty"
+        return self.queue[0]
+    
+    def isEmpty(self):
+        return len(self.queue) == 0
+    
+    def size(self):
+        return len(self.queue)
+
+class vx:
+  def __init__(self,val):
+    self.val=val
+    self.c=0
+    self.p=None
+    self.d=0
+    self.adj=[]
+
+class graph:
+  def __init__(self,v,e):
+    self.v=v
+    self.e=e
+    self.vs=[]
+    for i in range(1,v+1):
+      x=vx(i)
+      self.vs.append(x)
+
+v,e=map(int,input().split())
+a=graph(v,e)
+for i in range(e):
+  s,d=map(int,input().split())
+  a.vs[s-1].adj.append(a.vs[d-1])
+  a.vs[d-1].adj.append(a.vs[s-1])
+
+def bfs(g,s):
+  q=Queue()
+  s.c=1
+  q.enqueue(s)
+  for j in range(g.v):
+    u=q.dequeue()
+    print(u.val)
+    for i in u.adj:
+      if i.c==0:
+        i.c=1
+        i.d+=1
+        i.p=u
+        q.enqueue(i)
+bfs(a,a.vs[0])
+

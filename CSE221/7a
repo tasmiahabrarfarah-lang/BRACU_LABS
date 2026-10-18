@@ -1,0 +1,54 @@
+import heapq
+
+def dijkstra(n, adj, source, dest):
+    dist = [float('inf')] * (n + 1)
+    parent = [-1] * (n + 1)
+    dist[source] = 0
+    heap = [(0, source)]
+
+    while heap:
+        d, u = heapq.heappop(heap)
+
+        if d > dist[u]:
+            continue
+
+        for v, w in adj[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                parent[v] = u
+                heapq.heappush(heap, (dist[v], v))
+
+    if dist[dest] == float('inf'):
+        return -1, []
+
+    path = []
+    current = dest
+    while current != -1:
+        path.append(current)
+        current = parent[current]
+    path.reverse()
+
+    return dist[dest], path
+
+def main():
+    n, m, s, d = map(int, input().split())
+    u_list = list(map(int, input().split()))
+    v_list = list(map(int, input().split()))
+    w_list = list(map(int, input().split()))
+
+    adj = [[] for _ in range(n + 1)]  
+
+    for u, v, w in zip(u_list, v_list, w_list):
+        adj[u].append((v, w))  
+
+    distance, path = dijkstra(n, adj, s, d)
+
+    if distance == -1:
+        print(-1)
+    else:
+        print(distance)
+        print(*path)
+
+if __name__ == "__main__":
+    main()
+

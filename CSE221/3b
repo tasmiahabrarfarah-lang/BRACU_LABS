@@ -1,0 +1,13 @@
+n=int(input())
+li=list(map(int,input().split(' ')))
+maxs=float('-inf')
+maxi=li[0]
+j=1
+while j<n:
+  news=maxi+(li[j])**2
+  maxs=max(maxs,news)
+  if li[j]>maxi:
+    maxi=li[j]
+  j+=1
+print(maxs)
+

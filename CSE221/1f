@@ -1,0 +1,20 @@
+a=int(input())
+b=input()
+c=input()
+d=b.split(" ")
+e=c.split(" ")
+count=0
+for i in range(a):
+  max_idx = i
+  flag=False
+  for j in range(i+1, a):
+    if int(e[j])>int(e[max_idx]) or int(e[j])==int(e[max_idx]) and int(d[j])<int(d[max_idx]):
+      max_idx=j
+      flag=True
+  if flag!=False:
+    d[i],d[max_idx]=d[max_idx],d[i]
+    e[i],e[max_idx]=e[max_idx],e[i]
+    count+=1
+print("Minimum swaps:",count)
+for i in range(a):
+  print(f"ID: {d[i]} Mark: {e[i]}")

@@ -1,0 +1,10 @@
+n,m=map(int,input().split())
+u=list(map(int,input().split()))
+v=list(map(int,input().split()))
+id=[0]*n
+od=[0]*n
+for i in range(m):
+  id[v[i]-1]+=1
+  od[u[i]-1]+=1
+for i in range(n):
+  print(id[i]-od[i],end=" ")

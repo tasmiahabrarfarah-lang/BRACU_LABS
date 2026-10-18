@@ -1,0 +1,9 @@
+x=input().split(" ")
+a,b=int(x[0]),int(x[1])
+result = 1
+while b > 0:
+  if b % 2 == 1:
+    result = (result * a) % 107
+  a = (a * a) % 107
+  b //= 2
+print(result)

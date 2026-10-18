@@ -1,0 +1,33 @@
+from collections import deque
+
+a, b = map(int, input().split())
+g = [list(input().strip()) for _ in range(a)]
+visited = [[False]*b for _ in range(a)]
+
+def bfs(i, j):
+    q = deque()
+    q.append((i, j))
+    visited[i][j] = True
+    diamonds = 1 if g[i][j] == 'D' else 0
+    directions = [(-1,0), (1,0), (0,-1), (0,1)]
+
+    while q:
+        x, y = q.popleft()
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < a and 0 <= ny < b:
+                if not visited[nx][ny] and g[nx][ny] != '#':
+                    visited[nx][ny] = True
+                    q.append((nx, ny))
+                    if g[nx][ny] == 'D':
+                        diamonds += 1
+    return diamonds
+
+max_diamonds = 0
+
+for i in range(a):
+    for j in range(b):
+        if not visited[i][j] and g[i][j] != '#':
+            max_diamonds = max(max_diamonds, bfs(i, j))
+
+print(max_diamonds)

@@ -1,0 +1,41 @@
+import heapq
+
+def modified_dijkstra(n, adj):
+    danger = [float('inf')] * (n + 1)
+    danger[1] = 0  
+    heap = [(0, 1)]  
+
+    while heap:
+        d, u = heapq.heappop(heap)
+
+        if d > danger[u]:
+            continue
+
+        for v, w in adj[u]:
+            
+            new_danger = max(danger[u], w)
+            if new_danger < danger[v]:
+                danger[v] = new_danger
+                heapq.heappush(heap, (danger[v], v))
+
+    return danger
+
+def main():
+    n, m = map(int, input().split())
+    adj = [[] for _ in range(n + 1)] 
+
+    for _ in range(m):
+        u, v, w = map(int, input().split())
+        adj[u].append((v, w))
+        adj[v].append((u, w)) 
+
+    danger = modified_dijkstra(n, adj)
+
+    for i in range(1, n + 1):
+        if danger[i] == float('inf'):
+            print(-1, end=' ')
+        else:
+            print(danger[i], end=' ')
+
+if __name__ == "__main__":
+    main()

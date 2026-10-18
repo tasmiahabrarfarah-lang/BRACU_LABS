@@ -1,0 +1,56 @@
+import heapq
+
+def dijkstra_with_parity(n, edges):
+    adj = [[] for _ in range(n + 1)]  
+    for (u, v, w) in edges:
+        adj[u].append((v, w))
+
+    
+    dist = [[float('inf')] * 2 for _ in range(n + 1)]
+
+    heap = []
+
+   
+    for v, w in adj[1]:
+        parity = w % 2
+        if dist[v][parity] > w:
+            dist[v][parity] = w
+            heapq.heappush(heap, (w, v, parity))
+
+    while heap:
+        d, u, p = heapq.heappop(heap)
+
+        if d > dist[u][p]:
+            continue
+
+        for v, w in adj[u]:
+            new_parity = w % 2
+            if new_parity != p:  
+                if dist[v][new_parity] > dist[u][p] + w:
+                    dist[v][new_parity] = dist[u][p] + w
+                    heapq.heappush(heap, (dist[v][new_parity], v, new_parity))
+
+    ans = min(dist[n][0], dist[n][1])
+    if ans == float('inf'):
+        print(-1)
+    else:
+        print(ans)
+
+def main():
+    n, m = map(int, input().split())
+
+    u_list = list(map(int, input().split()))
+    v_list = list(map(int, input().split()))
+    w_list = list(map(int, input().split()))
+
+    edges = []
+    for i in range(m):
+        u = u_list[i]
+        v = v_list[i]
+        w = w_list[i]
+        edges.append((u, v, w))
+
+    dijkstra_with_parity(n, edges)
+
+if __name__ == "__main__":
+    main()

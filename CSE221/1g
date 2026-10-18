@@ -1,0 +1,20 @@
+a=int(input())
+l=[]
+b=0
+for i in range(a):
+  x=input()
+  y=x.split(" ")
+  z=y[6].split(':')
+  t=int(z[0])*60+int(z[1])
+  y.append(t)
+  y.append(b)
+  l.append(y)
+  b+=1
+for i in range(a):
+  min_idx=i
+  for j in range(i+1,a):
+    if l[j][0]<l[min_idx][0] or (l[j][0]==l[min_idx][0] and l[j][7]>l[min_idx][7]) or (l[j][0]==l[min_idx][0] and l[j][7]==l[min_idx][7] and l[j][8]<l[min_idx][8]):
+      min_idx=j
+  l[i],l[min_idx]=l[min_idx],l[i]
+for i in range(a):
+  print(f'{l[i][0]} will departure for {l[i][4]} at {l[i][6]}')

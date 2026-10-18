@@ -1,0 +1,49 @@
+import heapq
+from collections import defaultdict, deque
+
+def find_alien_order(words):
+
+    graph = defaultdict(list)
+    indegree = {chr(c): 0 for c in range(ord('a'), ord('z') + 1)}
+    all_chars = set()
+
+    for word in words:
+        for c in word:
+            all_chars.add(c)
+
+    n = len(words)
+    for i in range(n - 1):
+        w1, w2 = words[i], words[i + 1]
+        min_len = min(len(w1), len(w2))
+
+        if w1[:min_len] == w2[:min_len] and len(w1) > len(w2):
+            return -1
+        for j in range(min_len):
+            if w1[j] != w2[j]:
+                graph[w1[j]].append(w2[j])
+                indegree[w2[j]] += 1
+                break
+
+    heap = []
+    for c in all_chars:
+        if indegree[c] == 0:
+            heapq.heappush(heap, c)
+
+    result = []
+    while heap:
+        c = heapq.heappop(heap)
+        result.append(c)
+        for neighbor in graph[c]:
+            indegree[neighbor] -= 1
+            if indegree[neighbor] == 0:
+                heapq.heappush(heap, neighbor)
+
+    if len(result) != len(all_chars):
+        return -1
+
+    return ''.join(result)
+
+# Read input
+n = int(input())
+words = [input().strip() for _ in range(n)]
+print(find_alien_order(words))

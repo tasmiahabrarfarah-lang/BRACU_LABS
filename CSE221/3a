@@ -1,0 +1,53 @@
+def merge(a, b):
+    # write your code here
+    # a and b are two sorted list
+    # merge function will return a sorted list after merging a and b
+    i=0
+    j=0
+    k=0
+    m=len(a)+len(b)
+    n=[0]*m
+    global c
+    while i<len(a) or j<len(b):
+      if i<len(a) and j<len(b):
+        if a[i]<=b[j]:
+            n[k]=a[i]
+            i+=1
+        else:
+            n[k]=b[j]
+            c+=len(a)-i
+            j+=1
+      elif i<len(a):
+        n[k]=a[i]
+        i+=1
+      elif j<len(b):
+        n[k]=b[j]
+        j+=1
+      k+=1
+    if i==len(a)-1:
+      while j!=len(b)-1:
+        n[k]=b[j]
+        j+=1
+        k+=1
+    elif j==len(b)-1:
+      while i!=len(a)-1:
+        n[k]=a[i]
+        i+=1
+        k+=1
+    return n
+
+def mergeSort(arr):
+    if len(arr) <= 1:
+        return arr
+    else:
+        mid = len(arr)//2
+        a1 = mergeSort(arr[:mid:])  # write the parameter 
+        a2 = mergeSort(arr[mid::])  # write the parameter
+        return merge(a1, a2)          # complete the merge function above 
+c=0
+x=input()
+y=list(map(int,input().split()))
+z=mergeSort(y)
+print(c)
+for i in z:
+  print(i,end=" ")

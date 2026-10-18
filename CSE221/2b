@@ -1,0 +1,39 @@
+a=int(input())
+b=list(map(int, input().split()))
+c=int(input())
+d=list(map(int, input().split()))
+n=[]
+x=a+c
+for i in range(x):
+    n.append(0)
+i=0
+j=0
+k=0
+while i<len(b) or j<len(d):
+    if i<len(b) and j<len(d):
+        if b[i]<=d[j]:
+            n[k]=b[i]
+            i+=1
+        else:
+            n[k]=d[j]
+            j+=1
+    elif i<len(b):
+        n[k]=b[i]
+        i+=1
+    elif j<len(d):
+        n[k]=d[j]
+        j+=1
+    k+=1
+if i==len(b)-1:
+    while j!=len(d)-1:
+        n[k]=d[j]
+        j+=1
+        k+=1
+elif j==len(d)-1:
+    while i!=len(b)-1:
+        n[k]=b[i]
+        i+=1
+        k+=1   
+for i in range(len(n)):
+    print(n[i],end=" ")
+

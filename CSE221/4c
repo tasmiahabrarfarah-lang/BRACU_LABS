@@ -1,0 +1,8 @@
+n=int(input())
+r=[[0]*n for i in range(n)]
+for i in range(n):
+  m=list(map(int,input().split()))
+  for j in range(1,m[0]+1):
+    r[i][m[j]]=1
+for i in r:
+  print(" ".join(map(str,i)))

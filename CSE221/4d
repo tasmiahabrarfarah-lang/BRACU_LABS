@@ -1,0 +1,15 @@
+n,m=map(int,input().split())
+u=list(map(int,input().split()))
+v=list(map(int,input().split()))
+r=[0]*n
+c=0
+for i in range(m):
+  r[u[i]-1]+=1
+  r[v[i]-1]+=1
+for i in r:
+  if i%2!=0:
+    c+=1
+if c==2 or c==0:
+  print("YES")
+else:
+  print("NO")

@@ -1,0 +1,39 @@
+import sys
+import threading
+from collections import deque
+
+def main():
+    sys.setrecursionlimit(1 << 25)
+    
+    n = int(sys.stdin.readline())
+    adj = [[] for _ in range(n + 1)]
+    
+    for _ in range(n - 1):
+        u, v = map(int, sys.stdin.readline().split())
+        adj[u].append(v)
+        adj[v].append(u)
+
+    def bfs(start):
+        visited = [-1] * (n + 1)
+        visited[start] = 0
+        q = deque([start])
+        farthest_node = start
+
+        while q:
+            node = q.popleft()
+            for neighbor in adj[node]:
+                if visited[neighbor] == -1:
+                    visited[neighbor] = visited[node] + 1
+                    q.append(neighbor)
+                    if visited[neighbor] > visited[farthest_node]:
+                        farthest_node = neighbor
+        return farthest_node, visited[farthest_node]
+
+    u, _ = bfs(1)
+
+    v, dist = bfs(u)
+
+    print(dist)
+    print(u, v)
+
+threading.Thread(target=main).start()

@@ -1,0 +1,23 @@
+n, k = map(int, input().split())
+b = list(map(int, input().split()))
+
+i = 0
+j = 0
+maxl = 0
+cs = 0
+
+while j < n:
+    cs += b[j] 
+
+
+    while cs > k:
+        cs -= b[i]
+        i += 1
+
+
+    maxl = max(maxl, j - i + 1)
+
+
+    j += 1
+
+print(maxl)

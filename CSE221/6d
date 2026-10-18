@@ -1,0 +1,32 @@
+import sys
+import threading
+
+def main():
+    sys.setrecursionlimit(1 << 25)
+    input = sys.stdin.readline
+
+    n, r = map(int, input().split())
+    adj = [[] for _ in range(n + 1)]
+
+    for _ in range(n - 1):
+        u, v = map(int, input().split())
+        adj[u].append(v)
+        adj[v].append(u)
+
+    size = [0] * (n + 1)
+
+    def dfs(u, parent):
+        size[u] = 1  
+        for v in adj[u]:
+            if v != parent:
+                dfs(v, u)
+                size[u] += size[v]
+
+    dfs(r, -1)
+
+    q = int(input())
+    for _ in range(q):
+        x = int(input())
+        print(size[x])
+
+threading.Thread(target=main).start()
